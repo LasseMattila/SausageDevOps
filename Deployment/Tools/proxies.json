@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json.schemastore.org/proxies",
+  "proxies": {
+    "index": {
+      "matchCondition": {
+        "route": "/"
+      },
+      "backendUri": "{StorageAccountEndpoint}index.html",
+      "requestOverrides": {
+        "backend.request.headers.Cache-Control": "no-cache, no-store, must-revalidate",
+        "backend.request.headers.Pragma": "no-cache",
+        "backend.request.headers.Expires": "0"
+      }
+    },
+    "static": {
+      "matchCondition": {
+        "route": "/static/{*file}"
+      },
+      "backendUri": "{StorageAccountEndpoint}static/{file}"
+    },
+    "vendor": {
+      "matchCondition": {
+        "route": "/vendor/{*file}"
+      },
+      "backendUri": "{StorageAccountEndpoint}vendor/{file}"
+    },
+    "root static": {
+      "matchCondition": {
+        "route": "/{file}.{ending}"
+      },
+      "backendUri": "{StorageAccountEndpoint}{file}.{ending}"
+    },
+    "spa-fallback": {
+      "matchCondition": {
+        "route": "/{*restOfPath}"
+      },
+      "backendUri": "{StorageAccountEndpoint}index.html",
+      "requestOverrides": {
+        "backend.request.headers.Cache-Control": "no-cache, no-store, must-revalidate",
+        "backend.request.headers.Pragma": "no-cache",
+        "backend.request.headers.Expires": "0"
+      }
+    }
+  }
+}
